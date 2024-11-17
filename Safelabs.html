@@ -39,9 +39,11 @@
                 service.style.textAlign = "center";
 
                 const heading = service.querySelector("h3");
-                heading.style.marginBottom = "15px";
-                heading.style.fontSize = "1.5rem";
-                heading.style.color = "#444";
+                if (heading) {
+                    heading.style.marginBottom = "15px";
+                    heading.style.fontSize = "1.5rem";
+                    heading.style.color = "#444";
+                }
 
                 const inputs = service.querySelectorAll("input, button");
                 inputs.forEach(input => {
@@ -89,49 +91,6 @@
             footerText.style.fontSize = "1rem";
         });
 
-        // Encrypt a File
-        function encryptFile() {
-            const fileInput = document.querySelector("#encryptFileInput");
-            const file = fileInput.files[0];
-            if (!file) {
-                alert("Please select a file to encrypt.");
-                return;
-            }
-            const key = "my-encryption-key"; // Replace with secure key storage
-            localStorage.setItem("encryptionKey", key);
-
-            const reader = new FileReader();
-            reader.onload = function () {
-                const encryptedContent = btoa(reader.result + key); // Simple encryption (replace with a better method)
-                alert("File encrypted successfully. Save the file to use it later.");
-                console.log("Encrypted Content:", encryptedContent);
-            };
-            reader.readAsText(file);
-        }
-
-        // Decrypt a File
-        function decryptFile() {
-            const fileInput = document.querySelector("#decryptFileInput");
-            const file = fileInput.files[0];
-            if (!file) {
-                alert("Please select a file to decrypt.");
-                return;
-            }
-            const key = localStorage.getItem("encryptionKey");
-            if (!key) {
-                alert("No encryption key found.");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function () {
-                const decryptedContent = atob(reader.result.replace(key, ""));
-                alert("File decrypted successfully.");
-                console.log("Decrypted Content:", decryptedContent);
-            };
-            reader.readAsText(file);
-        }
-
         // Upload to Cloud
         function uploadToCloud(provider) {
             const fileInput = document.querySelector(`#${provider}FileInput`);
@@ -165,15 +124,21 @@
     <!-- Upload to Google Cloud -->
     <div class="service">
         <h3>Upload to Google Cloud</h3>
-        <input type="file" id="GoogleFileInput" />
-        <button onclick="uploadToCloud('Google')">Upload to Google Cloud</button>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.png" 
+             alt="Google Cloud Logo" 
+             style="width: 150px; cursor: pointer;" 
+             onclick="document.getElementById('GoogleFileInput').click()" />
+        <input type="file" id="GoogleFileInput" style="display: none;" />
     </div>
 
     <!-- Upload to Amazon Web Services -->
     <div class="service">
         <h3>Upload to Amazon Web Services</h3>
-        <input type="file" id="AmazonFileInput" />
-        <button onclick="uploadToCloud('Amazon')">Upload to AWS</button>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" 
+             alt="AWS Logo" 
+             style="width: 150px; cursor: pointer;" 
+             onclick="document.getElementById('AmazonFileInput').click()" />
+        <input type="file" id="AmazonFileInput" style="display: none;" />
     </div>
 
     <footer>
