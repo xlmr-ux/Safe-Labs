@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Labs - Secure Cloud Storage</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // General Body Styling
+            document.body.style.fontFamily = "Arial, sans-serif";
+            document.body.style.margin = "0";
+            document.body.style.padding = "0";
+            document.body.style.backgroundColor = "#f9f9f9";
+            document.body.style.color = "#333";
+            document.body.style.textAlign = "center";
+
+            // Header Styling
+            const h1 = document.querySelector("h1");
+            h1.style.fontSize = "2.5rem";
+            h1.style.margin = "20px 0 10px";
+            h1.style.color = "#222";
+
+            const p = document.querySelector("p");
+            p.style.fontSize = "1rem";
+            p.style.margin = "10px 0 30px";
+            p.style.color = "#666";
+
+            // Service Section Styling
+            const services = document.querySelectorAll(".service");
+            services.forEach(service => {
+                service.style.display = "inline-block";
+                service.style.backgroundColor = "#f4f4f4";
+                service.style.border = "2px solid #ddd";
+                service.style.borderRadius = "10px";
+                service.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+                service.style.margin = "20px";
+                service.style.padding = "20px";
+                service.style.width = "300px";
+                service.style.textAlign = "center";
+
+                const heading = service.querySelector("h3");
+                heading.style.marginBottom = "15px";
+                heading.style.fontSize = "1.5rem";
+                heading.style.color = "#444";
+
+                const inputs = service.querySelectorAll("input, button");
+                inputs.forEach(input => {
+                    input.style.width = "90%";
+                    input.style.margin = "10px 0";
+                    input.style.padding = "10px";
+                    input.style.fontSize = "1rem";
+                    input.style.border = "1px solid #ccc";
+                    input.style.borderRadius = "5px";
+                    input.style.outline = "none";
+                });
+
+                const button = service.querySelector("button");
+                if (button) {
+                    button.style.backgroundColor = "#007bff";
+                    button.style.color = "white";
+                    button.style.border = "none";
+                    button.style.cursor = "pointer";
+                    button.style.transition = "background-color 0.3s ease, transform 0.2s ease";
+
+                    button.addEventListener("mouseover", () => {
+                        button.style.backgroundColor = "#0056b3";
+                        button.style.transform = "scale(1.05)";
+                    });
+
+                    button.addEventListener("mouseout", () => {
+                        button.style.backgroundColor = "#007bff";
+                        button.style.transform = "scale(1)";
+                    });
+                }
+            });
+
+            // Footer Styling
+            const footer = document.querySelector("footer");
+            footer.style.backgroundColor = "#222";
+            footer.style.color = "white";
+            footer.style.padding = "20px";
+            footer.style.marginTop = "30px";
+
+            const footerHeading = footer.querySelector("h3");
+            footerHeading.style.fontSize = "1.8rem";
+            footerHeading.style.marginBottom = "10px";
+
+            const footerText = footer.querySelector("p");
+            footerText.style.fontSize = "1rem";
+        });
+
+        // Encrypt a File
+        function encryptFile() {
+            const fileInput = document.querySelector("#encryptFileInput");
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file to encrypt.");
+                return;
+            }
+            const key = "my-encryption-key"; // Replace with secure key storage
+            localStorage.setItem("encryptionKey", key);
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const encryptedContent = btoa(reader.result + key); // Simple encryption (replace with a better method)
+                alert("File encrypted successfully. Save the file to use it later.");
+                console.log("Encrypted Content:", encryptedContent);
+            };
+            reader.readAsText(file);
+        }
+
+        // Decrypt a File
+        function decryptFile() {
+            const fileInput = document.querySelector("#decryptFileInput");
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file to decrypt.");
+                return;
+            }
+            const key = localStorage.getItem("encryptionKey");
+            if (!key) {
+                alert("No encryption key found.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const decryptedContent = atob(reader.result.replace(key, ""));
+                alert("File decrypted successfully.");
+                console.log("Decrypted Content:", decryptedContent);
+            };
+            reader.readAsText(file);
+        }
+
+        // Upload to Cloud
+        function uploadToCloud(provider) {
+            const fileInput = document.querySelector(`#${provider}FileInput`);
+            const file = fileInput.files[0];
+            if (!file) {
+                alert(`Please select a file to upload to ${provider}.`);
+                return;
+            }
+            alert(`File uploaded to ${provider} successfully.`);
+        }
+    </script>
+</head>
+<body>
+    <h1>Our Services</h1>
+    <p>Explore how Safe Labs keeps your files safe in the cloud</p>
+
+    <!-- Encrypt Files -->
+    <div class="service">
+        <h3>Encrypt Files</h3>
+        <input type="file" id="encryptFileInput" />
+        <button onclick="encryptFile()">Encrypt File</button>
+    </div>
+
+    <!-- Decrypt Files -->
+    <div class="service">
+        <h3>Decrypt Files</h3>
+        <input type="file" id="decryptFileInput" />
+        <button onclick="decryptFile()">Decrypt File</button>
+    </div>
+
+    <!-- Upload to Google Cloud -->
+    <div class="service">
+        <h3>Upload to Google Cloud</h3>
+        <input type="file" id="GoogleFileInput" />
+        <button onclick="uploadToCloud('Google')">Upload to Google Cloud</button>
+    </div>
+
+    <!-- Upload to Amazon Web Services -->
+    <div class="service">
+        <h3>Upload to Amazon Web Services</h3>
+        <input type="file" id="AmazonFileInput" />
+        <button onclick="uploadToCloud('Amazon')">Upload to AWS</button>
+    </div>
+
+    <footer>
+        <h3>Contact Us</h3>
+        <p>Have questions or need help? Get in touch with us!</p>
+    </footer>
+</body>
+</html>
