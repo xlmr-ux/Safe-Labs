@@ -3,148 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local Safe - Secure Cloud Storage</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // General Body Styling
-            document.body.style.fontFamily = "Arial, sans-serif";
-            document.body.style.margin = "0";
-            document.body.style.padding = "0";
-            document.body.style.backgroundColor = "#f9f9f9";
-            document.body.style.color = "#333";
-            document.body.style.textAlign = "center";
-
-            // Header Styling
-            const h1 = document.querySelector("h1");
-            h1.style.fontSize = "2.5rem";
-            h1.style.margin = "20px 0 10px";
-            h1.style.color = "#222";
-
-            const p = document.querySelector("p");
-            p.style.fontSize = "1rem";
-            p.style.margin = "10px 0 30px";
-            p.style.color = "#666";
-
-            // Service Section Styling
-            const services = document.querySelectorAll(".service");
-            services.forEach(service => {
-                service.style.display = "inline-block";
-                service.style.backgroundColor = "#f4f4f4";
-                service.style.border = "2px solid #ddd";
-                service.style.borderRadius = "10px";
-                service.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
-                service.style.margin = "20px";
-                service.style.padding = "20px";
-                service.style.width = "300px";
-                service.style.textAlign = "center";
-
-                const heading = service.querySelector("h3");
-                if (heading) {
-                    heading.style.marginBottom = "15px";
-                    heading.style.fontSize = "1.5rem";
-                    heading.style.color = "#444";
-                }
-
-                const inputs = service.querySelectorAll("input, button");
-                inputs.forEach(input => {
-                    input.style.width = "90%";
-                    input.style.margin = "10px 0";
-                    input.style.padding = "10px";
-                    input.style.fontSize = "1rem";
-                    input.style.border = "1px solid #ccc";
-                    input.style.borderRadius = "5px";
-                    input.style.outline = "none";
-                });
-
-                const button = service.querySelector("button");
-                if (button) {
-                    button.style.backgroundColor = "#007bff";
-                    button.style.color = "white";
-                    button.style.border = "none";
-                    button.style.cursor = "pointer";
-                    button.style.transition = "background-color 0.3s ease, transform 0.2s ease";
-
-                    button.addEventListener("mouseover", () => {
-                        button.style.backgroundColor = "#0056b3";
-                        button.style.transform = "scale(1.05)";
-                    });
-
-                    button.addEventListener("mouseout", () => {
-                        button.style.backgroundColor = "#007bff";
-                        button.style.transform = "scale(1)";
-                    });
-                }
-            });
-
-            // Footer Styling
-            const footer = document.querySelector("footer");
-            footer.style.backgroundColor = "#222";
-            footer.style.color = "white";
-            footer.style.padding = "20px";
-            footer.style.marginTop = "30px";
-
-            const footerHeading = footer.querySelector("h3");
-            footerHeading.style.fontSize = "1.8rem";
-            footerHeading.style.marginBottom = "10px";
-
-            const footerText = footer.querySelector("p");
-            footerText.style.fontSize = "1rem";
-        });
-
-        // Upload to Cloud
-        function uploadToCloud(provider) {
-            const fileInput = document.querySelector(`#${provider}FileInput`);
-            const file = fileInput.files[0];
-            if (!file) {
-                alert(`Please select a file to upload to ${provider}.`);
-                return;
-            }
-            alert(`File uploaded to ${provider} successfully.`);
+    <title>Sky Lock - Secure File Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
         }
-    </script>
+        header {
+            background-color: #4b0082;
+            color: #ffd700;
+            padding: 20px;
+            position: relative;
+        }
+        header img {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+        }
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+        }
+        .service {
+            flex: 1 1 calc(33.333% - 40px);
+            max-width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .service img {
+            width: 80px;
+            cursor: pointer;
+        }
+        .service button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4b0082;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .service button:hover {
+            background-color: #372061;
+        }
+        #progressBar {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Our Services</h1>
-    <p>Explore how Local Safe keeps your files safe in the cloud</p>
+    <header>
+        <img src="images/logo.png" alt="Sky Lock Logo">
+        <h1>Sky Lock</h1>
+        <p>Secure File Management</p>
+    </header>
 
-    <!-- Encrypt Files -->
-    <div class="service">
-        <h3>Encrypt Files</h3>
-        <input type="file" id="encryptFileInput" />
-        <button onclick="encryptFile()">Encrypt File</button>
+    <h2>Our Services</h2>
+
+    <div class="services-container">
+        <!-- Encrypt Files -->
+        <div class="service">
+            <h3>Encrypt Files</h3>
+            <img src="images/encrypt.png" alt="Encrypt Icon">
+            <input type="file" id="encryptFileInput">
+            <button onclick="handleService('encrypt')">Encrypt File</button>
+        </div>
+
+        <!-- Decrypt Files -->
+        <div class="service">
+            <h3>Decrypt Files</h3>
+            <img src="images/decrypt.png" alt="Decrypt Icon">
+            <input type="file" id="decryptFileInput">
+            <button onclick="handleService('decrypt')">Decrypt File</button>
+        </div>
+
+        <!-- Upload to Cloud -->
+        <div class="service">
+            <h3>Upload to Cloud</h3>
+            <select id="cloudProvider">
+                <option value="gcp">Google Cloud</option>
+                <option value="aws">AWS</option>
+            </select>
+            <input type="file" id="cloudFileInput">
+            <button onclick="handleCloudUpload()">Upload File</button>
+        </div>
     </div>
 
-    <!-- Decrypt Files -->
-    <div class="service">
-        <h3>Decrypt Files</h3>
-        <input type="file" id="decryptFileInput" />
-        <button onclick="decryptFile()">Decrypt File</button>
-    </div>
+    <div id="progressBar" style="display: none;">Uploading... <span id="progressText"></span></div>
 
-    <!-- Upload to Google Cloud -->
-    <div class="service">
-    <h3>Upload to Google Cloud</h3>
-    <img src="images/gcloud.png" 
-         alt="Google Cloud Logo" 
-         style="width: 150px; cursor: pointer;" 
-         onclick="document.getElementById('GoogleFileInput').click()" />
-    <input type="file" id="GoogleFileInput" style="display: none;" />
-</div>
+    <script>
+        function handleService(service) {
+            const inputId = 
+                service === 'encrypt' ? 'encryptFileInput' :
+                service === 'decrypt' ? 'decryptFileInput' : null;
 
+            if (!inputId) {
+                alert("Invalid service.");
+                return;
+            }
 
-    <!-- Upload to Amazon Web Services -->
-    <div class="service">
-        <h3>Upload to Amazon Web Services</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" 
-             alt="AWS Logo" 
-             style="width: 150px; cursor: pointer;" 
-             onclick="document.getElementById('AmazonFileInput').click()" />
-        <input type="file" id="AmazonFileInput" style="display: none;" />
-    </div>
+            const fileInput = document.getElementById(inputId);
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file first.");
+                return;
+            }
 
-    <footer>
-        <h3>Contact Us</h3>
-        <p>Have questions or need help? Get in touch with us!</p>
-    </footer>
+            if (file.size > 10 * 1024 * 1024) {
+                alert("File size exceeds 10MB.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            document.getElementById('progressBar').style.display = 'block';
+            document.getElementById('progressText').textContent = '';
+
+            fetch(`/${service}`, { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => alert(data.message || JSON.stringify(data)))
+                .catch(err => alert('Error: ' + err))
+                .finally(() => document.getElementById('progressBar').style.display = 'none');
+        }
+
+        function handleCloudUpload() {
+            const provider = document.getElementById('cloudProvider').value;
+            const fileInput = document.getElementById('cloudFileInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file first.");
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                alert("File size exceeds 10MB.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            document.getElementById('progressBar').style.display = 'block';
+            document.getElementById('progressText').textContent = '';
+
+            fetch(`/upload/${provider}`, { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => alert(data.message || JSON.stringify(data)))
+                .catch(err => alert('Error: ' + err))
+                .finally(() => document.getElementById('progressBar').style.display = 'none');
+        }
+    </script>
 </body>
 </html>
